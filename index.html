@@ -211,6 +211,69 @@ const RELATIONS = {
     C:["Les échanges sont souvent précis.","Le risque est d'analyser longtemps avant de décider."]}
 };
 
+
+// Textes enrichis (rédigés pour ce test, à lire comme des pistes et non des certitudes)
+const PLUS_STYLES = {
+ D:{quotidien:"Vous êtes peut-être celui ou celle qui propose un plan quand personne ne se décide, qui règle un problème plutôt que d'en parler longtemps, et qui aime savoir où l'on va. Pour ce style, une journée réussie est souvent une journée où les choses ont avancé.",
+    energie:["Avoir un objectif clair à atteindre","Pouvoir décider par soi-même","Voir rapidement le résultat de ses efforts"],
+    fatigue:["Les discussions qui tournent en rond","Attendre la décision des autres","Se sentir freiné(e) par des détails"],
+    desaccord:"Vous avez tendance à le dire tout de suite et sans détour. C'est souvent clair et efficace, mais l'autre peut le recevoir comme une attaque, surtout s'il est plus réservé.",
+    question:"Dans quelles situations prendre un peu plus de temps avant de décider vous aurait été utile ?"},
+ I:{quotidien:"Vous êtes peut-être celui ou celle qui lance l'idée de la sortie, qui connaît du monde un peu partout et qui met de l'ambiance à table. Pour ce style, une journée réussie est souvent une journée riche en échanges et en bonne humeur.",
+    energie:["Les rencontres et les conversations","Les projets nouveaux, avec une part d'imprévu","Se sentir apprécié(e)"],
+    fatigue:["La solitude prolongée ou la routine","Les tâches répétitives et très détaillées","Les ambiances froides ou critiques"],
+    desaccord:"Vous cherchez plutôt à convaincre avec énergie, ou à détendre l'atmosphère avec humour. Cela apaise souvent, mais le fond du désaccord peut rester en suspens.",
+    question:"Quels projets avez-vous commencés avec enthousiasme et qui mériteraient d'être terminés ?"},
+ S:{quotidien:"Vous êtes peut-être celui ou celle qui pense à prendre des nouvelles, qui remarque quand quelqu'un ne va pas bien, et qui préfère un dimanche tranquille à une sortie improvisée. Pour ce style, une journée réussie est souvent une journée paisible, entourée de ses proches.",
+    energie:["Un quotidien stable et des repères familiers","Se sentir utile à ses proches","Une ambiance sereine"],
+    fatigue:["Les changements de programme de dernière minute","Les conflits ouverts","Devoir aller vite sans avoir le temps de s'organiser"],
+    desaccord:"Vous avez tendance à attendre, voire à ne rien dire pour préserver la paix. Cela évite les éclats, mais les frustrations peuvent s'accumuler sans que l'entourage s'en rende compte.",
+    question:"Y a-t-il des choses que vous aimeriez dire à vos proches et que vous gardez pour vous ?"},
+ C:{quotidien:"Vous êtes peut-être celui ou celle qui lit la notice, compare avant d'acheter et repère l'erreur sur la facture. Pour ce style, une journée réussie est souvent une journée où les choses ont été bien faites et où rien n'a été laissé au hasard.",
+    energie:["Comprendre comment les choses fonctionnent","Avoir le temps de bien faire","Des informations claires et fiables"],
+    fatigue:["Les décisions prises à la va-vite","Les informations floues ou contradictoires","Les critiques sans arguments précis"],
+    desaccord:"Vous préférez argumenter avec des faits, souvent après réflexion. C'est solide, mais l'autre peut ressentir de la distance ou avoir l'impression d'être corrigé.",
+    question:"Dans quelles situations une décision « assez bonne » aurait-elle suffi ?"}
+};
+K.forEach(k=>Object.assign(STYLES[k],PLUS_STYLES[k]));
+
+const DETAIL_COMBOS = {
+ DI:"Le Rouge vous donne l'envie d'avancer et de décider, le Jaune l'aisance pour embarquer les autres. Vous êtes peut-être souvent à l'initiative des projets ou des sorties, et vous savez rendre les choses enthousiasmantes. La tension possible : vouloir aller vite tout en voulant que tout le monde suive avec plaisir, au risque de laisser de côté les plus prudents.",
+ DS:"Le Rouge apporte la volonté d'atteindre vos objectifs, le Vert la patience et la régularité. Vous êtes peut-être de ceux qui avancent sans bruit mais sans lâcher, et sur qui l'on peut compter. La tension possible : entre l'envie d'avancer et le besoin de stabilité, un changement imposé par les autres peut être mal vécu.",
+ DC:"Le Rouge vous pousse à viser des résultats, le Bleu à les obtenir avec rigueur. Vous aimez sans doute que les choses soient à la fois rapides et bien faites, et vous repérez vite ce qui cloche. La tension possible : un niveau d'exigence élevé, pour vous comme pour les autres, qui peut être perçu comme de la sévérité.",
+ ID:"Le Jaune domine avec son goût des idées et des rencontres, le Rouge ajoute l'audace de passer à l'acte. Vous êtes peut-être celui ou celle qui dit « et si on faisait... » et qui le fait vraiment. La tension possible : beaucoup d'élan au départ, et moins de patience pour la phase de suivi.",
+ IS:"Le Jaune vous rend sociable et chaleureux(se), le Vert y ajoute l'écoute et la fidélité. Vous êtes peut-être quelqu'un chez qui l'on se sent bien accueilli, qui se souvient des anniversaires et des petits soucis de chacun. La tension possible : vouloir faire plaisir à tout le monde, au point de ne plus oser contrarier.",
+ IC:"Le Jaune vous donne le goût de partager et de convaincre, le Bleu le souci d'être juste et précis. Vous aimez sans doute expliquer, raconter et transmettre, en vous appuyant sur ce que vous savez. La tension possible : l'envie d'être spontané(e) qui se heurte à la crainte de se tromper.",
+ SD:"Le Vert domine avec son calme et sa constance, le Rouge ajoute une fermeté qui ne se voit pas toujours au premier abord. Vous êtes peut-être perçu(e) comme doux(ce), mais vous savez ce que vous voulez et vous y tenez. La tension possible : accepter longtemps, puis trancher d'un coup, ce qui peut surprendre l'entourage.",
+ SI:"Le Vert vous rend attentif(ve) et fiable, le Jaune y ajoute la chaleur et le plaisir d'être ensemble. Vous êtes peut-être le lien qui fait que la famille ou les amis se retrouvent. La tension possible : penser aux autres avant vous-même, au point de vous oublier.",
+ SC:"Le Vert apporte la régularité et le besoin de sécurité, le Bleu le soin et la méthode. Vous aimez sans doute les choses bien préparées et un quotidien sans mauvaises surprises. La tension possible : les imprévus et les décisions précipitées peuvent vous coûter beaucoup d'énergie.",
+ CD:"Le Bleu domine avec son besoin de comprendre et de bien faire, le Rouge ajoute la détermination à aller au bout. Vous êtes peut-être quelqu'un qui étudie un sujet à fond, puis qui agit sans hésiter. La tension possible : une fois convaincu(e), il peut être difficile d'entendre un autre avis.",
+ CI:"Le Bleu vous donne le goût de la réflexion, le Jaune la curiosité et l'envie de partager. Vous aimez sans doute découvrir, comprendre, puis raconter ce que vous avez appris. La tension possible : entre l'envie de vous lancer et le besoin d'être sûr(e), certaines idées restent dans un tiroir.",
+ CS:"Le Bleu apporte la précision, le Vert la patience et le calme. Vous êtes peut-être quelqu'un de discret, sur qui l'on peut compter pour tout ce qui demande du soin. La tension possible : rester souvent en retrait, au point que vos qualités passent inaperçues."
+};
+Object.keys(DETAIL_COMBOS).forEach(k=>COMBOS[k].detail=DETAIL_COMBOS[k]);
+
+const PISTES_EQUILIBRE = [
+ "Repensez à une situation de tension récente : quelle couleur a pris le dessus ?",
+ "Comparez votre comportement en famille et avec des personnes que vous connaissez peu : est-ce le même ?",
+ "Repassez le test dans quelques semaines en pensant à un contexte précis (la maison, les amis) : le résultat peut se préciser."
+];
+
+// Astuce concrète pour chaque relation
+const ASTUCES = {
+ D:{D:"Répartissez clairement qui décide de quoi.",I:"Laissez-leur un moment pour échanger, puis recentrez sur l'objectif.",S:"Annoncez les changements à l'avance et demandez leur avis.",C:"Donnez-leur le temps et les informations : vous gagnerez du temps ensuite."},
+ I:{D:"Allez droit au but, puis gardez l'enthousiasme pour la suite.",I:"Désignez ensemble qui s'occupe de la suite concrète.",S:"Laissez-leur le temps de réagir avant de passer à l'idée suivante.",C:"Préparez deux ou trois éléments concrets avant de leur présenter une idée."},
+ S:{D:"Donnez votre avis tôt, avant que la décision soit prise.",I:"Proposez-leur aussi des moments calmes en tête-à-tête.",S:"Prévoyez des moments pour parler franchement de ce qui ne va pas.",C:"Fixez-vous une date de décision pour ne pas laisser traîner."},
+ C:{D:"Donnez-leur une synthèse courte, et gardez les détails pour plus tard.",I:"Écoutez l'idée jusqu'au bout avant de pointer ce qui manque.",S:"Montrez votre reconnaissance avec des mots simples.",C:"Décidez ensemble à partir de quand l'information est suffisante."}
+};
+
+const QUESTIONS_ENSEMBLE = [
+ "Qu'est-ce qui vous surprend dans votre résultat, et qu'est-ce qui vous semble juste ?",
+ "Dans quelle situation récente reconnaissez-vous votre couleur la plus marquée ?",
+ "Qu'est-ce que l'autre fait qui vous aide vraiment, et que vous ne lui avez peut-être jamais dit ?",
+ "Sur quel point d'attention aimeriez-vous que l'autre vous aide ?"
+];
+
 // 30 questions réécrites : quatre propositions de valeur comparable, sur le même aspect
 const Q = [
  {D:"Quand il faut décider, je tranche rapidement.",I:"Quand il faut décider, je me fie à mon intuition.",S:"Quand il faut décider, je cherche ce qui convient à tout le monde.",C:"Quand il faut décider, je rassemble d'abord les informations utiles."},
@@ -306,9 +369,14 @@ function carteStyle(k,titre){
   return `<div class="card" style="border-left-color:${st.couleur}">
     <h2>${titre}</h2>
     <p>${st.resume}</p>
+    <h3>Au quotidien</h3><p>${st.quotidien}</p>
     <h3>Ce que ce style apporte souvent</h3>${ul(st.apports)}
+    <h3>Ce qui donne de l'énergie</h3>${ul(st.energie)}
+    <h3>Ce qui fatigue souvent</h3>${ul(st.fatigue)}
+    <h3>En cas de désaccord</h3><p>${st.desaccord}</p>
     <h3>Ce qui peut coincer</h3>${ul(st.vigilance)}
     <h3>Pour bien communiquer avec ce style</h3>${ul(st.communiquer)}
+    <h3>Une question à vous poser</h3><p style="margin:0"><em>${st.question}</em></p>
   </div>`;
 }
 
@@ -351,7 +419,8 @@ function results(){
   let corps="";
   if(r.type==="equilibre"){
     corps=`<div class="card"><h2>Profil équilibré</h2>
-      <p>Vos quatre couleurs ont des soldes proches. Cela peut vouloir dire que votre comportement varie selon les situations, ou que plusieurs phrases vous correspondaient autant. Aucune couleur ne ressort nettement : les détails ci-dessus sont plus parlants qu'une étiquette.</p></div>`;
+      <p>Vos quatre couleurs ont des soldes proches. Cela peut vouloir dire que votre comportement varie selon les situations, ou que plusieurs phrases vous correspondaient autant. Aucune couleur ne ressort nettement : les détails ci-dessus sont plus parlants qu'une étiquette.</p>
+      <h3>Quelques pistes pour y voir plus clair</h3>${ul(PISTES_EQUILIBRE)}</div>`;
   } else if(r.type==="egalite"){
     corps=`<p>Ces couleurs arrivent exactement au même niveau. Voici ce que chacune décrit :</p>`+
       r.tetes.map(k=>carteStyle(k,`${COULEUR[k]} (${STYLES[k].nom})`)).join("");
@@ -360,7 +429,7 @@ function results(){
     if(r.type==="combo"){
       const c=COMBOS[top+r.second[0]];
       corps+=`<div class="card" style="border-left-color:${STYLES[top].couleur}">
-        <h2>${c.nom}</h2><p>${c.resume}</p>${ul(c.tendances)}
+        <h2>${c.nom}</h2><p>${c.resume}</p><p>${c.detail}</p>${ul(c.tendances)}
         <p class="muted" style="margin:.75rem 0 0">À surveiller : ${c.vigilance}</p></div>`;
     }
     if(r.ecart<=SEUIL_PROCHE && N[r.second[0]]>0){
@@ -377,7 +446,8 @@ function results(){
       <div class="vs">${K.map(k=>`<div class="vs-item" style="border-top-color:${STYLES[k].couleur}">
         <h3>Avec un ${COULEUR[k]}</h3>
         <p><strong>Ce qui marche souvent :</strong> ${RELATIONS[r.top][k][0]}</p>
-        <p><strong>Point d'attention :</strong> ${RELATIONS[r.top][k][1]}</p></div>`).join("")}</div>`;
+        <p><strong>Point d'attention :</strong> ${RELATIONS[r.top][k][1]}</p>
+        <p><strong>Astuce :</strong> ${ASTUCES[r.top][k]}</p></div>`).join("")}</div>`;
   } else {
     vs=`<h2 style="margin-top:2.5rem">Comment s'y prendre avec chaque couleur</h2>
       <p class="muted">Aucune couleur ne ressort seule chez vous : voici des repères généraux.</p>
@@ -395,6 +465,12 @@ function results(){
 
     ${corps}
     ${vs}
+
+    <div class="card">
+      <h2>Pour en parler ensemble</h2>
+      <p class="muted small">Ce test est surtout utile comme point de départ d'une conversation. Quelques questions à vous poser l'un à l'autre :</p>
+      ${ul(QUESTIONS_ENSEMBLE)}
+    </div>
 
     <div class="actions">
       <button class="btn" id="again">Refaire le test</button>
