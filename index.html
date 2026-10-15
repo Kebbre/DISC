@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Test de personnalité DISC</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#1C2430; --muted:#5A6577; --line:#D5DBE4;
+  --d:#C23B2A; --i:#C98A10; --s:#2F8A55; --c:#2563A6;
+  --d-soft:#F7E1DE; --i-soft:#FAEFD6; --s-soft:#DDEFE4; --c-soft:#DCE8F5;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#141A22; --surface:#1D2530; --ink:#E9EDF3; --muted:#A3AEBF; --line:#334050;
+    --d:#F0705E; --i:#F2BE4B; --s:#5CC487; --c:#6AA7E6;
+    --d-soft:#3A2420; --i-soft:#3A3120; --s-soft:#1F3A2B; --c-soft:#1F3047;
+    color-scheme:dark;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:1.1875rem; line-height:1.55;
+}
+main{max-width:40rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+h1{font-size:2.25rem;line-height:1.15;margin:0 0 1rem}
+h2{font-size:1.6rem;line-height:1.2;margin:0 0 .75rem}
+h3{font-size:1.2rem;margin:1.75rem 0 .5rem}
+p{margin:0 0 1rem}
+.muted{color:var(--muted)}
+.hidden{display:none!important}
+
+/* Bandeau des 4 couleurs : l'élément signature */
+.stripe{display:flex;height:.75rem;border-radius:.5rem;overflow:hidden;margin-bottom:2rem}
+.stripe span{flex:1}
+.stripe span:nth-child(1){background:var(--d)}
+.stripe span:nth-child(2){background:var(--i)}
+.stripe span:nth-child(3){background:var(--s)}
+.stripe span:nth-child(4){background:var(--c)}
+
+label{display:block;font-weight:700;margin:1.5rem 0 .4rem}
+input[type=text]{
+  width:100%;font:inherit;padding:.8rem 1rem;border:2px solid var(--line);
+  border-radius:.6rem;background:var(--surface);color:var(--ink)
+}
+button{font:inherit;cursor:pointer}
+.btn{
+  display:inline-block;margin-top:1.5rem;padding:.9rem 1.6rem;border:0;border-radius:.6rem;
+  background:var(--ink);color:var(--bg);font-weight:700;font-size:1.15rem
+}
+.btn.secondary{background:transparent;color:var(--ink);border:2px solid var(--line)}
+:focus-visible{outline:3px solid var(--c);outline-offset:3px}
+
+/* Questions */
+.progress{height:.5rem;background:var(--line);border-radius:.5rem;overflow:hidden;margin:.5rem 0 1.75rem}
+.progress div{height:100%;background:var(--ink);width:0;transition:width .25s ease}
+.options{display:grid;gap:.75rem;margin-top:1.25rem}
+.option{
+  text-align:left;padding:1.05rem 1.2rem;background:var(--surface);color:var(--ink);
+  border:2px solid var(--line);border-radius:.75rem;font-size:1.15rem;line-height:1.4
+}
+.option:hover{border-color:var(--muted)}
+.option.chosen{border-color:var(--ink);background:var(--bg)}
+.back{background:none;border:0;color:var(--muted);padding:.5rem 0;margin-top:1.25rem;text-decoration:underline}
+
+/* Résultats */
+.compass{display:block;width:100%;max-width:22rem;margin:1rem auto 1.5rem}
+.bars{display:grid;gap:.6rem;margin:1rem 0 1.5rem}
+.bar{display:grid;grid-template-columns:7.5rem 1fr 3rem;align-items:center;gap:.6rem}
+.bar .track{height:1rem;background:var(--line);border-radius:.5rem;overflow:hidden}
+.bar .fill{height:100%;border-radius:.5rem}
+.bar .pct{text-align:right;font-weight:700}
+.card{background:var(--surface);border-radius:.9rem;padding:1.4rem 1.3rem;margin:1.25rem 0;border-left:.5rem solid var(--ink)}
+.card ul{margin:.25rem 0 0;padding-left:1.2rem}
+.card li{margin:.25rem 0}
+.note{font-size:.95rem;color:var(--muted);margin-top:2.5rem;border-top:1px solid var(--line);padding-top:1rem}
+.actions{display:flex;flex-wrap:wrap;gap:.75rem}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  .actions,.stripe{display:none}
+  body{background:#fff;color:#000}
+  .card{break-inside:avoid;border:1px solid #ccc}
+}
+</style>
+</head>
+<body>
+<main>
+  <div class="stripe" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+  <!-- Accueil -->
+  <section id="intro">
+    <h1>Quel est votre style de personnalité ?</h1>
+    <p>Ce test s'appuie sur le modèle DISC, qui décrit quatre grandes façons d'agir et de communiquer : Dominance, Influence, Stabilité et Conformité.</p>
+    <p class="muted">24 questions, environ 5 minutes. À chaque fois, choisissez la phrase qui vous ressemble le plus. Il n'y a ni bonne ni mauvaise réponse : répondez spontanément.</p>
+    <label for="name">Votre prénom</label>
+    <input type="text" id="name" autocomplete="given-name" placeholder="Facultatif">
+    <button class="btn" id="start">Commencer le test</button>
+  </section>
+
+  <!-- Questions -->
+  <section id="quiz" class="hidden" aria-live="polite">
+    <p class="muted" id="counter"></p>
+    <div class="progress" aria-hidden="true"><div id="bar"></div></div>
+    <h2>Laquelle de ces phrases vous ressemble le plus ?</h2>
+    <div class="options" id="options"></div>
+    <button class="back" id="back">Question précédente</button>
+  </section>
+
+  <!-- Résultats -->
+  <section id="result" class="hidden"></section>
+</main>
+
+<script>
+const STYLES = {
+  D:{nom:"Dominance",couleur:"var(--d)",soft:"var(--d-soft)",
+     resume:"Vous êtes tourné(e) vers l'action et les résultats. Vous aimez décider, relever des défis et avancer vite.",
+     forces:["Prend des décisions rapidement","Assume les responsabilités","Fait avancer les projets","Reste efficace sous pression"],
+     vigilance:["Peut paraître brusque ou impatient(e)","Écoute parfois trop peu l'avis des autres"],
+     communiquer:["Allez droit au but","Proposez des solutions plutôt que des problèmes","Laissez-lui une part de choix et de contrôle"]},
+  I:{nom:"Influence",couleur:"var(--i)",soft:"var(--i-soft)",
+     resume:"Vous êtes chaleureux(se), expressif(ve) et sociable. Vous aimez les gens, les idées nouvelles et la bonne ambiance.",
+     forces:["Crée facilement du lien","Motive et entraîne les autres","Optimiste et plein(e) d'idées","À l'aise pour s'exprimer"],
+     vigilance:["Peut se disperser ou manquer de suivi","Peut sous-estimer les détails et les délais"],
+     communiquer:["Gardez un ton amical et détendu","Laissez-lui la place de parler et de partager","Résumez les points importants par écrit"]},
+  S:{nom:"Stabilité",couleur:"var(--s)",soft:"var(--s-soft)",
+     resume:"Vous êtes calme, fiable et à l'écoute. Vous recherchez l'harmonie et la sécurité, pour vous comme pour vos proches.",
+     forces:["Patient(e) et attentionné(e)","Loyal(e) et constant(e)","Très bon(ne) soutien pour l'entourage","Apaise les tensions"],
+     vigilance:["Peut avoir du mal à dire non","Peut résister aux changements soudains"],
+     communiquer:["Prenez le temps, sans brusquer","Prévenez à l'avance des changements","Montrez votre sincérité et votre reconnaissance"]},
+  C:{nom:"Conformité",couleur:"var(--c)",soft:"var(--c-soft)",
+     resume:"Vous êtes réfléchi(e), précis(e) et méthodique. Vous aimez comprendre, bien faire les choses et vous appuyer sur des faits.",
+     forces:["Soucieux(se) de la qualité","Analyse avant d'agir","Organisé(e) et fiable dans le détail","Garde la tête froide"],
+     vigilance:["Peut être trop exigeant(e) envers soi et les autres","Peut tarder à décider faute d'informations complètes"],
+     communiquer:["Appuyez-vous sur des faits précis","Laissez-lui le temps de réfléchir","Évitez les approximations et les surprises"]}
+};
+
+// Questions originales : une phrase par style
+const Q = [
+ {D:"J'aime prendre les décisions.",I:"J'aime rencontrer de nouvelles personnes.",S:"J'aime quand les choses sont calmes et prévisibles.",C:"J'aime que les choses soient faites correctement."},
+ {D:"Je vais droit au but.",I:"Je raconte volontiers des anecdotes.",S:"J'écoute plus que je ne parle.",C:"Je vérifie les détails avant d'agir."},
+ {D:"Un défi à relever me motive.",I:"Une bonne ambiance me motive.",S:"Me sentir utile aux autres me motive.",C:"Comprendre comment les choses fonctionnent me motive."},
+ {D:"Je supporte mal de perdre du temps.",I:"Je supporte mal de m'ennuyer.",S:"Je supporte mal les disputes.",C:"Je supporte mal les erreurs évitables."},
+ {D:"En groupe, je prends souvent la direction.",I:"En groupe, j'apporte de l'énergie et de la bonne humeur.",S:"En groupe, je veille à ce que chacun se sente bien.",C:"En groupe, je repère ce qui pourrait poser problème."},
+ {D:"Sous pression, je deviens plus autoritaire.",I:"Sous pression, je m'agite et je m'éparpille.",S:"Sous pression, je cède pour éviter les tensions.",C:"Sous pression, je me referme et j'analyse."},
+ {D:"On me décrit comme quelqu'un de déterminé.",I:"On me décrit comme quelqu'un d'enthousiaste.",S:"On me décrit comme quelqu'un de patient.",C:"On me décrit comme quelqu'un de rigoureux."},
+ {D:"Je préfère qu'on me dise l'essentiel, rapidement.",I:"Je préfère une histoire vivante à un long rapport.",S:"Je préfère qu'on m'annonce les choses avec douceur.",C:"Je préfère qu'on me donne des faits précis."},
+ {D:"Face à un problème, j'agis tout de suite.",I:"Face à un problème, j'en parle autour de moi.",S:"Face à un problème, je cherche une solution qui convient à tous.",C:"Face à un problème, j'étudie toutes les options."},
+ {D:"Le changement, je le provoque volontiers.",I:"Le changement, je le trouve excitant.",S:"Le changement, j'ai besoin de temps pour m'y faire.",C:"Le changement, je veux d'abord savoir s'il est justifié."},
+ {D:"Mon week-end idéal : boucler un projet ambitieux.",I:"Mon week-end idéal : sortir et voir du monde.",S:"Mon week-end idéal : un moment tranquille en famille.",C:"Mon week-end idéal : ranger, organiser ou apprendre quelque chose."},
+ {D:"Je suis plutôt franc(he).",I:"Je suis plutôt spontané(e).",S:"Je suis plutôt fidèle.",C:"Je suis plutôt prudent(e)."},
+ {D:"Ce qui me déplaît le plus : perdre le contrôle.",I:"Ce qui me déplaît le plus : être mis(e) à l'écart.",S:"Ce qui me déplaît le plus : être pris(e) au dépourvu.",C:"Ce qui me déplaît le plus : qu'on critique la qualité de mon travail."},
+ {D:"Je dis ce que je pense, même si ça dérange.",I:"Je parle avec les mains et beaucoup d'expression.",S:"Je laisse les autres s'exprimer en premier.",C:"Je choisis mes mots avec soin."},
+ {D:"Je suis fier(e) quand j'obtiens des résultats.",I:"Je suis fier(e) quand on m'apprécie.",S:"Je suis fier(e) quand j'ai pu aider quelqu'un.",C:"Je suis fier(e) quand mon travail est irréprochable."},
+ {D:"Pour un achat important, je décide vite.",I:"Pour un achat important, je me fie au coup de cœur.",S:"Pour un achat important, je demande l'avis de mes proches.",C:"Pour un achat important, je compare tout en détail."},
+ {D:"Chez moi, tout doit être pratique et efficace.",I:"Chez moi, c'est un peu en désordre mais vivant.",S:"Chez moi, c'est avant tout confortable et chaleureux.",C:"Chez moi, chaque chose est à sa place."},
+ {D:"Ce qui compte pour moi, c'est de réussir.",I:"Ce qui compte pour moi, c'est de passer un bon moment.",S:"Ce qui compte pour moi, c'est d'être en paix.",C:"Ce qui compte pour moi, c'est d'être exact(e)."},
+ {D:"Les règles, je les contourne si elles me freinent.",I:"Les règles, il m'arrive de les oublier.",S:"Les règles, je les suis pour ne pas créer de problème.",C:"Les règles, je les respecte et j'aime qu'elles soient claires."},
+ {D:"Dans une file d'attente, je m'impatiente vite.",I:"Dans une file d'attente, je discute avec mes voisins.",S:"Dans une file d'attente, j'attends tranquillement.",C:"Dans une file d'attente, j'observe comment c'est organisé."},
+ {D:"Mon rythme est rapide et direct.",I:"Mon rythme est rapide et animé.",S:"Mon rythme est régulier et posé.",C:"Mon rythme est réfléchi et méthodique."},
+ {D:"Quand je ne suis pas d'accord, je le dis immédiatement.",I:"Quand je ne suis pas d'accord, j'essaie de convaincre avec enthousiasme.",S:"Quand je ne suis pas d'accord, je le garde souvent pour moi.",C:"Quand je ne suis pas d'accord, j'argumente avec des faits."},
+ {D:"On compte sur moi pour faire avancer les choses.",I:"On compte sur moi pour remonter le moral.",S:"On compte sur moi pour être toujours présent(e).",C:"On compte sur moi pour la précision."},
+ {D:"Mon petit défaut : l'impatience.",I:"Mon petit défaut : je me disperse.",S:"Mon petit défaut : je suis trop arrangeant(e).",C:"Mon petit défaut : le perfectionnisme."}
+];
+
+const $ = id => document.getElementById(id);
+let idx = 0, answers = [], order = [];
+
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function show(id){["intro","quiz","result"].forEach(s=>$(s).classList.toggle("hidden",s!==id));window.scrollTo(0,0)}
+
+function start(){
+  idx=0;answers=new Array(Q.length).fill(null);
+  order=Q.map(()=>shuffle(["D","I","S","C"]));
+  show("quiz");render();
+}
+
+function render(){
+  $("counter").textContent=`Question ${idx+1} sur ${Q.length}`;
+  $("bar").style.width=(idx/Q.length*100)+"%";
+  $("back").classList.toggle("hidden",idx===0);
+  const box=$("options");box.innerHTML="";
+  order[idx].forEach(k=>{
+    const b=document.createElement("button");
+    b.className="option"+(answers[idx]===k?" chosen":"");
+    b.textContent=Q[idx][k];
+    b.onclick=()=>choose(k,b);
+    box.appendChild(b);
+  });
+  box.querySelector("button").focus({preventScroll:true});
+}
+
+function choose(k,btn){
+  answers[idx]=k;btn.classList.add("chosen");
+  setTimeout(()=>{ if(idx<Q.length-1){idx++;render()} else results() },180);
+}
+
+function results(){
+  const n=Q.length, sc={D:0,I:0,S:0,C:0};
+  answers.forEach(a=>sc[a]++);
+  const ranked=Object.keys(sc).sort((a,b)=>sc[b]-sc[a]);
+  const top=ranked[0], second=ranked[1];
+  const hasSecond=sc[second]>=sc[top]*0.7 && sc[second]>0;
+  const name=$("name").value.trim();
+  const st=STYLES[top];
+
+  // Position sur la boussole : axe vertical actif / réservé, axe horizontal tâches / personnes
+  const amp=1.8, clamp=v=>Math.max(-1,Math.min(1,v));
+  const x=clamp(((sc.I+sc.S)-(sc.D+sc.C))/n*amp);
+  const y=clamp(((sc.D+sc.I)-(sc.S+sc.C))/n*amp);
+  const cx=160+x*118, cy=160-y*118;
+
+  const pct=k=>Math.round(sc[k]/n*100);
+  const bars=["D","I","S","C"].map(k=>`
+    <div class="bar"><span>${STYLES[k].nom}</span>
+      <div class="track"><div class="fill" style="width:${pct(k)}%;background:${STYLES[k].couleur}"></div></div>
+      <span class="pct">${pct(k)} %</span></div>`).join("");
+
+  const quadrant=(k,x0,y0,lx,ly,anchor)=>`
+    <rect x="${x0}" y="${y0}" width="140" height="140" fill="${STYLES[k].soft}"/>
+    <text x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="15" font-weight="700" fill="${STYLES[k].couleur}">${STYLES[k].nom}</text>`;
+
+  const list=a=>"<ul>"+a.map(t=>`<li>${t}</li>`).join("")+"</ul>";
+
+  $("result").innerHTML=`
+    <h1>${name?name+", votre":"Votre"} profil : ${st.nom}${hasSecond?" et "+STYLES[second].nom:""}</h1>
+    <p>${st.resume}</p>
+
+    <svg class="compass" viewBox="0 0 320 340" role="img" aria-label="Position sur la boussole DISC">
+      <g transform="translate(0,10)">
+        ${quadrant("D",20,20,30,42,"start")}
+        ${quadrant("I",160,20,290,42,"end")}
+        ${quadrant("C",20,160,30,290,"start")}
+        ${quadrant("S",160,160,290,290,"end")}
+        <line x1="160" y1="20" x2="160" y2="300" stroke="var(--line)" stroke-width="2"/>
+        <line x1="20" y1="160" x2="300" y2="160" stroke="var(--line)" stroke-width="2"/>
+        <circle cx="${cx}" cy="${cy}" r="13" fill="var(--ink)"/>
+        <circle cx="${cx}" cy="${cy}" r="5" fill="var(--bg)"/>
+      </g>
+      <text x="160" y="12" text-anchor="middle" font-size="12" fill="var(--muted)">Actif, rapide</text>
+      <text x="160" y="336" text-anchor="middle" font-size="12" fill="var(--muted)">Posé, réservé</text>
+    </svg>
+    <p class="muted" style="text-align:center;font-size:1rem">À gauche : tourné vers les tâches. À droite : tourné vers les personnes.</p>
+
+    <h3>Répartition de vos réponses</h3>
+    <div class="bars">${bars}</div>
+
+    <div class="card" style="border-left-color:${st.couleur}">
+      <h2>Vos forces</h2>${list(st.forces)}
+      <h3>Points de vigilance</h3>${list(st.vigilance)}
+      <h3>Pour bien communiquer avec vous</h3>${list(st.communiquer)}
+    </div>
+
+    ${hasSecond?`<div class="card" style="border-left-color:${STYLES[second].couleur}">
+      <h2>Votre deuxième couleur : ${STYLES[second].nom}</h2>
+      <p>${STYLES[second].resume}</p>
+      <p class="muted" style="margin:0">Ce style nuance votre profil principal.</p>
+    </div>`:""}
+
+    <div class="actions">
+      <button class="btn" id="again">Refaire le test</button>
+      <button class="btn secondary" id="print">Imprimer les résultats</button>
+    </div>
+
+    <p class="note">Ce test est un outil de découverte personnelle inspiré du modèle DISC de William Marston. Il n'a pas de valeur scientifique ou médicale et ne remplace pas une évaluation professionnelle. Chacun possède les quatre styles à des degrés différents.</p>`;
+
+  $("again").onclick=()=>{ $("name").value=""; show("intro") };
+  $("print").onclick=()=>window.print();
+  show("result");
+}
+
+$("start").onclick=start;
+$("back").onclick=()=>{ if(idx>0){idx--;render()} };
+</script>
+</body>
+</html>
